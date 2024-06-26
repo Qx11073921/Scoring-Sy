@@ -1,0 +1,72 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class ScoringSystem
+{
++ DisplayScoringClass()
++ DisplayScoringItem(Class: ScoringClass)
++ readClass(name: className)
++ readItem()
+}
+class Administer
+{
+- id : String
+- code : String
+--
++ getId ():String
++ getCode (): String
++ setId (id:String)
++ setCode(Code : String)
+
++ addClass( scoringClass : ScoringClass)
++ deleteClass(scoringClass : ScoringClass)
+}
+
+class ScoringClass
+{
+- ClassName : String
+--
++ addItem(item : ScoringItem)
++ deleteItem(item : ScoringItem)
+}
+class ScoringItem
+{
+- ItemName : String
+- AverageScore : Double
+- TotalScorer : int
+--
++ ShowItemPicture()
++ ShowComment(comment : UserComment)
++ getAverageScore(Score : UserComment) : Double
++ getTotalScorer(PeopleNumber : UserComment) : int
+}
+class ItemPicture
+{
++ addPicture()
+}
+
+
+class User
+{
++ addComment(comment : UserComment)
+}
+class UserComment
+{
+- Comment : String
+- Time : String
+- Score : int
+--
++ getCommentTime() : String
+}
+
+ScoringSystem "1" --> "1" Administer : -administer
+ScoringClass "1" <--> "0...*" ScoringItem : -(item : ScoringItem)
+Administer "1" --> "0...*" ScoringClass : -class
+
+ScoringSystem --> User : -user
+User "1" <-->  "0...*" UserComment : -userComment
+
+ScoringItem "1" <--> "0...*" UserComment : -comment
+ScoringItem "1" --> "1" ItemPicture : -itemPicture
+
+@enduml
